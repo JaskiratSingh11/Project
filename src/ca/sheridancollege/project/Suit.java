@@ -6,7 +6,7 @@ package ca.sheridancollege.project;
 
 /**
  *
- * @author singh891
+ * @author jksg1
  */
 public enum Suit {
     HEARTS, DIAMONDS, CLUBS, SPADES

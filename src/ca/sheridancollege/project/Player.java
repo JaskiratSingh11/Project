@@ -4,46 +4,52 @@
  * Add your name as an author and the date!
  */
 package ca.sheridancollege.project;
-
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Scanner;
 /**
- * A class that models each Player in the game. Players have an identifier, which should be unique.
  *
- * @author dancye
- * @author Paul Bonenfant Jan 2020
+ * @author jksg1
+ *  date Nov 13
  */
 public abstract class Player {
+    private String name;
+    protected List<Card> hand;
+      private Scanner scanner = new Scanner(System.in);
 
-    private String name; //the unique name for this player
-
-    /**
-     * A constructor that allows you to set the player's unique ID
-     *
-     * @param name the unique ID to assign to this player.
-     */
     public Player(String name) {
         this.name = name;
+        this.hand = new ArrayList<>();
     }
 
-    /**
-     * @return the player name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Ensure that the playerID is unique
-     *
-     * @param name the player name to set
-     */
-    public void setName(String name) {
-        this.name = name;
+    public void receiveCard(Card card) {
+        hand.add(card);
     }
 
-    /**
-     * The method to be overridden when you subclass the Player class with your specific type of Player and filled in
-     * with logic to play your game.
-     */
-    public abstract void play();
+   public Card playCard() {
+        displayHand();
+        System.out.print("Choose a card to play (1-" + hand.size() + "): ");
+        int choice = scanner.nextInt() - 1;
+        while (choice < 0 || choice >= hand.size()) {
+            System.out.print("Invalid choice. Choose a card to play (1-" + hand.size() + "): ");
+            choice = scanner.nextInt() - 1;
+        }
+        return hand.remove(choice);
+    }
 
+    public boolean hasCards() {
+        return !hand.isEmpty();
+    }
+    public void displayHand() {
+        System.out.println(name + "'s hand:");
+        for (int i = 0; i < hand.size(); i++) {
+            System.out.println((i + 1) + ": " + hand.get(i).toString());
+        }
+    // Abstract method to be implemented by each specific player type
+    } 
+    public abstract void play(Game game);
 }
